@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdmins.stay.mapper.stayMapper">
+  <select id="getStayInfo"  resultMap="getStayInfoMap">
+       select t.registrationTime,
+       userName,
+       userIdCard,
+       phone,
+       roomNo,
+       roomCharge,
+       deposit,
+       memberCharge,
+       roomType,
+       roomConsumption,
+       shop,
+       'false' as isEdit,
+       id,
+       userRefund
+from manager t
+  </select>
+
+    <resultMap id="getStayInfoMap" type="com.kdmins.stay.pojo.stayInfoDate">
+        <result property="date" column="registrationTime"></result>
+        <collection property="stayInfos" ofType="com.kdmins.stay.pojo.stayManager">
+            <id property="id" column="id"></id>
+            <result property="registrationTime" column="registrationTime"/>
+            <result property="userName" column="userName"/>
+            <result property="userIdCard" column="userIdCard"/>
+            <result property="phone" column="phone"/>
+            <result property="roomNo" column="roomNo"/>
+            <result property="roomCharge" column="roomCharge"/>
+            <result property="deposit" column="deposit"/>
+            <result property="memberCharge" column="memberCharge"/>
+
+
+            <result property="roomType" column="roomType"/>
+            <result property="roomConsumption" column="roomConsumption"/>
+            <result property="shop" column="shop"/>
+            <result property="isEdit" column="isEdit"/>
+            <result property="userRefund" column="userRefund"/>
+
+        </collection>
+    </resultMap>
+     <select id="getOutInfo" resultType="com.kdmins.stay.pojo.OutInfo">
+       select t.id,t.outDate,t.outItem,t.outNum ,   'false' as isEdit from outmanager t
+     </select>
+
+    <update id="updateStayInfo" parameterType="com.kdmins.stay.pojo.stayManager">
+        update manager set registrationTime=#{registrationTime},
+         userName=#{userName},
+         userIdCard=#{userIdCard},
+
+         roomNo=#{roomNo},
+         roomCharge=#{roomCharge},
+         deposit=#{deposit},
+         memberCharge=#{memberCharge},
+         roomType=#{roomType},
+         roomConsumption=#{roomConsumption},
+         shop=#{shop}
+         where id=#{id}
+    </update>
+
+    <insert id="insertStayInfo" parameterType="com.kdmins.stay.pojo.stayManager">
+        insert into manager
+        (
+         registrationTime,
+         userName,
+         userIdCard,
+         roomNo,
+         roomCharge,
+         deposit,
+         memberCharge,
+         roomType,
+         roomConsumption,
+         shop
+        )values(
+        #{registrationTime},
+        #{userName},
+        #{userIdCard},
+        #{roomNo},
+        #{roomCharge},
+        #{deposit},
+        #{memberCharge},
+        #{roomType},
+        #{roomConsumption},
+        #{shop}
+        )
+
+
+
+    </insert>
+
+    <delete id="deleteStayInfo" parameterType="integer">
+        delete from  manager where id=#{id}
+
+    </delete>
+    <delete id="deleteOutInfo" parameterType="integer">
+        delete from  outManager where id=#{id}
+
+    </delete>
+
+
+
+
+
+    <update id="updateOutInfo" parameterType="com.kdmins.stay.pojo.OutInfo">
+        update outManager set outDate=#{outDate},
+         outNum=#{outNum},
+
+         outItem=#{outItem}
+         where id=#{id}
+    </update>
+
+    <insert id="insertOutInfo" parameterType="com.kdmins.stay.pojo.OutInfo">
+        insert into outManager
+        (
+         outDate,
+         outNum,
+         outItem
+
+        )values(
+        #{outDate},
+        #{outNum},
+        #{outItem}
+
+        )
+
+
+
+    </insert>
+
+
+
+
+
+
+
+
+
+</mapper>

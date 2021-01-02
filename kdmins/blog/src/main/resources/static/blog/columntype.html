@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>栏目文章列表-聚繁</title>
+    <link rel="stylesheet" href="plugin/layui/css/layui.css">
+    <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+
+
+    <footer>
+        <div class="footer-box">
+            <div class="main-content">
+                <strong>Copyright</strong> &nbsp;2019.01.16  &nbsp;by  &nbsp;<a href="#">大BUG</a><span>备案号：<a href="http://www.miitbeian.gov.cn/" target="_blank">蜀ICP备16031990号-2</a></span>
+            </div>
+        </div>
+    </footer>
+<script src="plugin/layui/layui.js"></script>
+<script>
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'pageItem', //注意，这里的 test1 是 ID，不用加 # 号
+            count: 50, //数据总数，从服务端得到
+            jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                console.log('当前页数：'+obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                console.log('每页数量：'+obj.limit); //得到每页显示的条数
+                //首次不执行
+                if(!first){
+                   console.log('执行')
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdmins.blog.mapper.BlogMapper">
+    <update id="updateArtitleInfo" parameterType="com.kdmins.blog.pojo.Artitle">
+        update artitle  set isRecommend=#{isRecommend},prompt=#{prompt}   ,groupId=#{groupId},text=#{text},name=#{name} ,recommendLevel=#{recommendLevel},artitleShort=#{artitleShort},updateTime=sysdate() where id=#{id}
+    </update>
+    <delete id="deleteArtitleById">
+        delete from artitle where id=#{id}
+    </delete>
+    <insert id="insertArtitleInfo" parameterType="com.kdmins.blog.pojo.Artitle">
+        insert into artitle(id, text, name, artitleShort, groupId, createTime, updateTime, author, prompt, isRecommend,recommendLevel)
+         values (uuid(),#{text},#{name},#{artitleShort},#{groupId},sysdate(),sysdate(),#{author},#{prompt},#{isRecommend},#{recommendLevel})
+    </insert>
+    <select id="getAllArtitleGroup" resultType="com.kdmins.blog.pojo.artitleGroup">
+		select id, artitleGroupName, artitleGroupRemark from artitlegroup t
+	</select>
+    <select id="getAllArtitleTree" resultType="java.util.Map">
+      select t.id as "ID",'0' as "PID",t.artitleGroupName AS "NAME" from artitlegroup
+t
+union
+select t1.id as "ID",t1.groupId as "PID",t1.name as "NAME" from artitle t1
+    </select>
+    <select id="getArtitleInfoById" resultType="com.kdmins.blog.pojo.Artitle" parameterType="string">
+       select t.id, name, t.text,artitleShort, groupId, createTime, updateTime,t.author,prompt,isRecommend,recommendLevel
+       from artitle t  where t.id=#{id}
+    </select>
+
+    <select id="getIsRecommend" resultType="com.kdmins.blog.pojo.Artitle" >
+       select t.id, name,artitleShort, groupId, createTime, updateTime,t.author,prompt,isRecommend
+       from artitle t  where t.isRecommend=1 order by recommendLevel
+    </select>
+
+    <select id="getArtitleInfoByGroupId" resultType="com.kdmins.blog.pojo.Artitle" parameterType="string">
+       select
+       t.id,
+      t.author ,
+	t.`name`,
+
+	t.artitleShort,
+	t.groupId,
+	t.createTime,
+	t.updateTime,
+	t.prompt,
+	t.isRecommend,
+	t.recommendLevel
+       from artitle t
+       <if test="groupId !=null ">
+           where t.groupId=#{groupId}
+       </if>
+
+    </select>
+
+
+
+    <select id="getAllArtitle" resultType="com.kdmins.blog.pojo.Artitle" >
+        select
+        t.id,
+        t.author ,
+        t.`name`,
+        t.text,
+        t.artitleShort,
+        t.groupId,
+        t.createTime,
+        t.updateTime,
+        t.prompt,
+        t.isRecommend,
+        t.recommendLevel
+        from artitle t
+
+
+    </select>
+
+
+
+
+
+
+
+
+    <select id="getArtitlrInfo" resultType="java.util.Map">
+  select t.id as "id", artitleGroupName as "name", artitleGroupRemark as "remark",t2.num from artitlegroup t
+				inner join
+				(select t1.groupId,count(*) as "num" from artitle t1 group by t1.groupId) t2 on t2.groupId=t.id
+    </select>
+    <update id="updateArtitleText" parameterType="com.kdmins.blog.pojo.Artitle">
+         UPDATE artitle set text=#{text} where id=#{id}
+     </update>
+
+    <select id="getArtitleInfoByFlId" parameterType="string" resultType="java.util.Map">
+ select t.name,t.id ,t.artitleShort from artitle t where t.groupId=#{flId}
+   </select>
+    <select id="getEssayLabel" resultType="com.kdmins.blog.pojo.artitleLabel">
+        select id,label from  artitlelabel
+    </select>
+   <select id="getGroupEssayByEssayId" parameterType="string" resultType="com.kdmins.blog.pojo.Artitle">
+       select t.id,t.`name` ,t.updateTime  from artitle t ,artitle t1 where t.groupId=t1.groupId and t1.id=#{id}  LIMIT 5
+   </select>
+    <!--  <select id="getAllessay" resultMap="essayInfo">
+           select
+      t.id as "essayId",
+        t.title,
+        t.author,
+        t1.id as "commentId",
+        t1.context,
+        t1.commentTime,
+        t1.commentUser
+    from essay t left join essayComments t1 on  t.id=t1.essayId
+      </select>-->
+    <!--
+     <update id="updateShort" parameterType="string">
+         UPDATE artitle set artitleShort =#{artitleShort} where id=#{id}
+     </update>
+
+
+     <select id="getAllArtitleTree" resultType="java.util.Map">
+         select t.id as "ID",'0' as "PID",t.FL_NAME AS "NAME" from artitle_fl t
+ union
+ select t1.id as "ID",t1.fl_id as "PID",t1.name as "NAME" from artitle t1
+     </select>
+     <select id="getArtitleInfoById" resultType="com.kdmins.blog.pojo.Artitle" parameterType="string">
+        SELECT
+     t.id as 'artitleId',
+     t.`name` as 'artitleName',
+     t.text as 'artitleContext',
+   t.fl_id as 'flId',
+   t.artitleShort as 'artitleShort'
+ FROM
+     artitle t
+ WHERE
+     t.id = #{id}
+     </select>
+
+     <select id="getAllArtitleInfo" resultType="java.util.Map">
+         SELECT
+     t.id as 'artitleId',
+     t.`name` as 'artitleName',
+
+   t.fl_id as 'flId',
+   t.artitleShort as 'artitleShort'
+ FROM
+     artitle t
+     </select>
+     <insert id="insertArtitle" parameterType="string">
+         insert into artitle  (id,fl_id,name) values(UUID(),#{flid},#{name})
+     </insert>
+   -->
+
+</mapper>

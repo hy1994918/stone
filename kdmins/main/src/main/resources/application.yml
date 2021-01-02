@@ -1,0 +1,70 @@
+#配置端口号
+server:
+  port: 7070
+mybatis:
+  mapper-locations: classpath*:mapper/*/*.xml
+management:
+  endpoints:
+    web:
+      cors:
+        allowed-origins: http://127.0.0.1:8080
+        allowed-methods: "*"
+      exposure:
+        include: "*"
+#配置主数据源
+spring:
+  mail:
+    # 邮件服务地址
+    host: smtp.qq.com
+    # 端口,可不写默认
+    port: 465
+    # 编码格式
+    default-encoding: utf-8
+    # 用户名
+    username: 1154474377@qq.com
+    # 授权码，就是我们刚才准备工作获取的代码
+    password: wqvirtjznelojfca
+    # 其它参数
+    properties:
+      mail:
+        smtp:
+          # 如果是用 SSL 方式，需要配置如下属性,使用qq邮箱的话需要开启
+          ssl:
+            enable: true
+            required: true
+          # 邮件接收时间的限制，单位毫秒
+          timeout: 10000
+          # 连接时间的限制，单位毫秒
+          connectiontimeout: 10000
+          # 邮件发送时间的限制，单位毫秒
+          writetimeout: 10000
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: Hy918129@
+    lettuce:
+      pool:
+        max-idle: 30
+        max-active: 8
+        max-wait: 10000
+        min-idle: 10
+
+  application:
+    name: blog-service
+  datasource:
+    druid:
+      url: jdbc:mysql://127.0.0.1:3306/hyadmin?characterEncoding=UTF-8&serverTimezone=UTC
+      username: hyadmin
+      password: hyadmin
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      initialSize: 5   #初始化大小
+      minIdle: 5        #最小
+      maxActive: 20     #最大
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+

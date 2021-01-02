@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdmins.quart.mapper.quartzMapper">
+    <select id="allTaskInfo" resultType="com.kdmins.common.pojo.quartzTask">
+  SELECT
+	t.SCHED_NAME as 'schedulerFactoryName' ,
+	t.JOB_NAME as 'jobName',
+	t.JOB_GROUP as 'jobGroup',
+	t.JOB_CLASS_NAME as 'jobClass',
+	t1.TRIGGER_STATE as 'jobStatus',
+	from_unixtime(t1.START_TIME/1000, "%Y-%m-%d %H:%i:%S") as 'createTime',
+
+	from_unixtime(t1.PREV_FIRE_TIME/1000, "%Y-%m-%d %H:%i:%S") as 'preExcTime',
+  from_unixtime(t1.NEXT_FIRE_TIME/1000, "%Y-%m-%d %H:%i:%S") as 'nextExcTime'
+FROM
+	qrtz_job_details t
+	LEFT JOIN qrtz_triggers t1 ON t.job_name = t1.job_name
+	AND t.job_group = t1.job_Group
+    </select>
+	<select id="getQuartzGroup" resultType="com.kdmins.common.pojo.quartzGroup">
+		SELECT
+	t.id,
+	t.jobClass,
+	t.`name`,
+	t.remark,
+	t.createTime,
+	t.updateTime
+FROM
+	quart_group t
+	</select>
+</mapper>

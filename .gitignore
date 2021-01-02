@@ -1,2 +1,3 @@
 kdmins/.idea/
-kdmins/.idea/libraries/Maven__commons_codec_commons_codec_1_14.xml
+kdmins/**/*.class
+kdmins/**/target/
