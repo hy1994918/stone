@@ -22,7 +22,7 @@
     <orcale-driver.version>11.2.0.3</orcale-driver.version>
     <fastjson.version>1.2.68</fastjson.version>
     <spring-shiro>1.5.3</spring-shiro>
-    <pagehelper.version>5.1.11</pagehelper.version>
+    <pagehelper.version>5.3.1</pagehelper.version>
     <pinyin4j.version>2.5.1</pinyin4j.version>
     <druid-spring.version>1.1.22</druid-spring.version>
     <redis-clients.version>3.3.0</redis-clients.version>
